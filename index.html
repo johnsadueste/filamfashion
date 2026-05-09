@@ -1,0 +1,1581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FilAm Fashion — Filipino American Style</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Space+Mono:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A96E;
+    --deep: #0D0A07;
+    --cream: #F5EFE6;
+    --rust: #8B3A2A;
+    --bark: #2A1F14;
+    --mist: #D4C5B0;
+    --accent: #E8C547;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--deep);
+    color: var(--cream);
+    font-family: 'Cormorant Garamond', serif;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    position: fixed;
+    width: 12px; height: 12px;
+    background: var(--gold);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s, width 0.3s, height 0.3s, background 0.3s;
+    mix-blend-mode: difference;
+  }
+  .cursor-ring {
+    position: fixed;
+    width: 36px; height: 36px;
+    border: 1px solid var(--gold);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.15s ease-out, width 0.3s, height 0.3s;
+    opacity: 0.6;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 2rem 4rem;
+    mix-blend-mode: normal;
+    background: linear-gradient(to bottom, rgba(13,10,7,0.95), transparent);
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .nav-links {
+    display: flex; gap: 3rem; list-style: none;
+  }
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--mist);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    height: 100vh;
+    display: flex; align-items: flex-end;
+    padding: 0 4rem 6rem;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: 
+      radial-gradient(ellipse at 70% 40%, rgba(201,169,110,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse at 20% 80%, rgba(139,58,42,0.15) 0%, transparent 50%),
+      linear-gradient(135deg, #0D0A07 0%, #1a120a 50%, #0D0A07 100%);
+  }
+
+  /* Woven pattern overlay */
+  .weave {
+    position: absolute; inset: 0;
+    opacity: 0.04;
+    background-image:
+      repeating-linear-gradient(0deg, var(--gold) 0px, var(--gold) 1px, transparent 1px, transparent 20px),
+      repeating-linear-gradient(90deg, var(--gold) 0px, var(--gold) 1px, transparent 1px, transparent 20px);
+  }
+
+  /* Diagonal accent line */
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 30%;
+    width: 1px; height: 100%;
+    background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+    opacity: 0.3;
+  }
+
+  .hero-tag {
+    position: absolute;
+    top: 50%; right: 4rem;
+    transform: translateY(-50%) rotate(90deg);
+    transform-origin: center center;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    opacity: 0.6;
+    text-transform: uppercase;
+  }
+
+  .hero-content { position: relative; z-index: 2; max-width: 800px; }
+
+  .hero-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 1s 0.3s forwards;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(4rem, 10vw, 9rem);
+    line-height: 0.9;
+    font-weight: 400;
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: fadeUp 1.2s 0.6s forwards;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--gold);
+    display: block;
+  }
+
+  .hero-subtitle {
+    font-size: 1.3rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--mist);
+    max-width: 420px;
+    line-height: 1.8;
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: fadeUp 1s 0.9s forwards;
+  }
+
+  .hero-cta {
+    display: inline-flex; gap: 2rem; align-items: center;
+    opacity: 0;
+    animation: fadeUp 1s 1.2s forwards;
+  }
+
+  .btn-primary {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--deep);
+    background: var(--gold);
+    border: none;
+    padding: 1.2rem 2.5rem;
+    text-decoration: none;
+    transition: background 0.3s, transform 0.3s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--accent); transform: translateY(-2px); }
+
+  .btn-ghost {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--mist);
+    background: transparent;
+    border: 1px solid rgba(201,169,110,0.4);
+    padding: 1.2rem 2.5rem;
+    text-decoration: none;
+    transition: border-color 0.3s, color 0.3s;
+  }
+  .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2.5rem; left: 50%;
+    transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 0.75rem;
+    opacity: 0;
+    animation: fadeIn 1s 2s forwards;
+  }
+  .scroll-hint span {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--mist);
+    opacity: 0.5;
+  }
+  .scroll-line {
+    width: 1px; height: 60px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    animation: pulse 2s infinite;
+  }
+
+  /* AI GENERATOR SECTION */
+  .generator {
+    padding: 8rem 4rem;
+    position: relative;
+    background: var(--bark);
+  }
+
+  .generator::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+  }
+
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 1.5rem;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1; max-width: 80px;
+    height: 1px;
+    background: var(--gold);
+    opacity: 0.4;
+  }
+
+  .generator-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 6rem;
+    align-items: start;
+  }
+
+  .generator-intro h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 400;
+    line-height: 1.15;
+    margin-bottom: 2rem;
+  }
+
+  .generator-intro h2 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .generator-intro p {
+    font-size: 1.15rem;
+    line-height: 2;
+    color: var(--mist);
+    font-weight: 300;
+    margin-bottom: 2rem;
+  }
+
+  .style-tags {
+    display: flex; flex-wrap: wrap; gap: 0.75rem;
+    margin-top: 2.5rem;
+  }
+
+  .style-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.5rem 1rem;
+    border: 1px solid rgba(201,169,110,0.3);
+    color: var(--mist);
+    cursor: pointer;
+    transition: all 0.3s;
+    background: transparent;
+  }
+  .style-tag:hover, .style-tag.active {
+    background: var(--gold);
+    color: var(--deep);
+    border-color: var(--gold);
+  }
+
+  /* AI Content Box */
+  .ai-box {
+    background: rgba(13,10,7,0.6);
+    border: 1px solid rgba(201,169,110,0.2);
+    padding: 3rem;
+    position: relative;
+    min-height: 420px;
+  }
+
+  .ai-box::before {
+    content: 'AI';
+    position: absolute; top: -0.75rem; left: 2.5rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.3em;
+    background: var(--bark);
+    color: var(--gold);
+    padding: 0 0.75rem;
+  }
+
+  .ai-controls {
+    display: flex; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap;
+  }
+
+  .ai-select {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    background: rgba(201,169,110,0.1);
+    border: 1px solid rgba(201,169,110,0.3);
+    color: var(--cream);
+    padding: 0.6rem 1rem;
+    flex: 1;
+    min-width: 120px;
+    outline: none;
+    cursor: pointer;
+  }
+
+  .ai-generate-btn {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    background: var(--gold);
+    color: var(--deep);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    transition: background 0.3s;
+    font-weight: 700;
+  }
+  .ai-generate-btn:hover { background: var(--accent); }
+  .ai-generate-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .ai-output {
+    font-size: 1.05rem;
+    line-height: 1.9;
+    color: var(--mist);
+    font-style: italic;
+    min-height: 200px;
+    position: relative;
+  }
+
+  .ai-output.loading::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0;
+    width: 40px; height: 2px;
+    background: var(--gold);
+    animation: typeBar 1.2s infinite;
+  }
+
+  .ai-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.7;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  /* COLLECTION GRID */
+  .collection {
+    padding: 8rem 4rem;
+  }
+
+  .collection-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 5rem;
+  }
+
+  .collection-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 400;
+    line-height: 1.1;
+  }
+
+  .collection-header h2 em { font-style: italic; color: var(--gold); }
+
+  .view-all {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-decoration: none;
+    display: flex; align-items: center; gap: 0.75rem;
+    transition: gap 0.3s;
+  }
+  .view-all:hover { gap: 1.5rem; }
+  .view-all::after { content: '→'; }
+
+  .collection-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 1.5rem;
+  }
+
+  .collection-card {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .collection-card:first-child {
+    grid-row: span 2;
+  }
+
+  .card-visual {
+    aspect-ratio: 3/4;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .collection-card:first-child .card-visual {
+    aspect-ratio: auto;
+    height: 100%;
+    min-height: 500px;
+  }
+
+  .card-bg {
+    width: 100%; height: 100%;
+    transition: transform 0.7s ease;
+  }
+
+  .collection-card:hover .card-bg { transform: scale(1.05); }
+
+  /* Textile pattern cards */
+  .pattern-1 {
+    background: 
+      repeating-linear-gradient(45deg, #2A1F14 0px, #2A1F14 10px, #1a120a 10px, #1a120a 20px),
+      repeating-linear-gradient(-45deg, rgba(201,169,110,0.15) 0px, rgba(201,169,110,0.15) 5px, transparent 5px, transparent 20px);
+  }
+  .pattern-2 {
+    background: 
+      radial-gradient(circle at 50% 50%, rgba(139,58,42,0.3) 0%, transparent 70%),
+      repeating-linear-gradient(0deg, #1a120a 0px, #1a120a 15px, #231810 15px, #231810 30px);
+  }
+  .pattern-3 {
+    background: 
+      repeating-linear-gradient(90deg, rgba(201,169,110,0.1) 0px, rgba(201,169,110,0.1) 1px, transparent 1px, transparent 25px),
+      repeating-linear-gradient(0deg, rgba(201,169,110,0.1) 0px, rgba(201,169,110,0.1) 1px, transparent 1px, transparent 25px),
+      #1a120a;
+  }
+
+  .card-symbol {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 5rem;
+    opacity: 0.15;
+    filter: sepia(100%) brightness(0.8);
+    pointer-events: none;
+  }
+
+  .card-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(13,10,7,0.9) 0%, transparent 50%);
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 2rem;
+    transition: background 0.3s;
+  }
+
+  .collection-card:hover .card-overlay {
+    background: linear-gradient(to top, rgba(13,10,7,0.95) 0%, rgba(13,10,7,0.3) 70%);
+  }
+
+  .card-meta {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 0.75rem;
+  }
+
+  .card-desc {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: var(--mist);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.4s, transform 0.4s;
+  }
+
+  .collection-card:hover .card-desc {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* PHILOSOPHY */
+  .philosophy {
+    padding: 8rem 4rem;
+    background: var(--bark);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .philosophy::before {
+    content: 'FILAM';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Playfair Display', serif;
+    font-size: 25vw;
+    font-weight: 700;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(201,169,110,0.05);
+    white-space: nowrap;
+    pointer-events: none;
+    letter-spacing: -0.05em;
+  }
+
+  .philosophy-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8rem;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .philosophy-text h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 4vw, 3.5rem);
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 2.5rem;
+  }
+  .philosophy-text h2 em { font-style: italic; color: var(--gold); }
+
+  .philosophy-text p {
+    font-size: 1.2rem;
+    line-height: 2;
+    color: var(--mist);
+    font-weight: 300;
+    margin-bottom: 2rem;
+  }
+
+  .pillars {
+    display: flex; flex-direction: column; gap: 2rem;
+  }
+
+  .pillar {
+    display: flex; gap: 2rem; align-items: flex-start;
+    padding: 2rem;
+    border: 1px solid rgba(201,169,110,0.12);
+    transition: border-color 0.3s;
+  }
+  .pillar:hover { border-color: rgba(201,169,110,0.4); }
+
+  .pillar-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-style: italic;
+    color: var(--gold);
+    opacity: 0.4;
+    line-height: 1;
+    min-width: 50px;
+  }
+
+  .pillar-content h3 {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.75rem;
+  }
+
+  .pillar-content p {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--mist);
+    font-weight: 300;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 5rem 4rem 3rem;
+    border-top: 1px solid rgba(201,169,110,0.15);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+
+  .footer-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+
+  .footer-brand span {
+    display: block;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.5em;
+    color: var(--mist);
+    opacity: 0.5;
+    margin-top: 0.5rem;
+    font-style: normal;
+  }
+
+  .footer-copy {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    color: var(--mist);
+    opacity: 0.4;
+    text-align: right;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+  @keyframes typeBar {
+    0% { width: 0; opacity: 1; }
+    50% { width: 40px; opacity: 1; }
+    100% { width: 0; opacity: 0; }
+  }
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  /* LOADING SPINNER */
+  .spinner {
+    display: inline-block;
+    width: 18px; height: 18px;
+    border: 2px solid rgba(201,169,110,0.3);
+    border-top-color: var(--gold);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+  }
+
+  /* MAGAZINE SECTION */
+  .magazine {
+    padding: 8rem 4rem;
+    background: #0a0608;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .magazine::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #c9558a, var(--gold), #c9558a, transparent);
+  }
+
+  .magazine-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 5rem;
+  }
+
+  .magazine-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 400;
+    line-height: 1.1;
+  }
+  .magazine-header h2 em { font-style: italic; color: #c9558a; }
+
+  .mag-issue-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--mist);
+    opacity: 0.5;
+    text-align: right;
+    line-height: 1.8;
+  }
+
+  /* FEATURED COVER */
+  .mag-featured {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 5rem;
+    align-items: center;
+    margin-bottom: 6rem;
+    padding-bottom: 6rem;
+    border-bottom: 1px solid rgba(201,169,110,0.12);
+  }
+
+  .cover-wrap {
+    position: relative;
+  }
+
+  .cover-img-container {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+  }
+
+  .cover-img-container::before {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    border: 1px solid rgba(201,85,138,0.3);
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .cover-img-container::after {
+    content: '';
+    position: absolute;
+    inset: -16px;
+    border: 1px solid rgba(201,169,110,0.15);
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .cover-photo {
+    width: 100%;
+    display: block;
+    position: relative;
+    z-index: 1;
+    filter: contrast(1.05) saturate(1.1);
+  }
+
+  .cover-badge {
+    position: absolute;
+    top: 1.5rem; right: -1.5rem;
+    z-index: 2;
+    background: var(--gold);
+    color: var(--deep);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 0.5rem 1rem;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+  }
+
+  .cover-caption {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    z-index: 2;
+    background: linear-gradient(to top, rgba(10,6,8,0.95), transparent);
+    padding: 3rem 1.5rem 1.5rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--mist);
+    opacity: 0.7;
+  }
+
+  .cover-editorial {
+    display: flex; flex-direction: column; gap: 2.5rem;
+  }
+
+  .mag-kicker {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: #c9558a;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .mag-kicker::before {
+    content: '';
+    width: 30px; height: 1px;
+    background: #c9558a;
+  }
+
+  .cover-editorial h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 400;
+    line-height: 1.15;
+  }
+  .cover-editorial h3 em { font-style: italic; color: var(--gold); }
+
+  .cover-editorial p {
+    font-size: 1.15rem;
+    line-height: 2;
+    color: var(--mist);
+    font-weight: 300;
+  }
+
+  .cover-headlines {
+    display: flex; flex-direction: column; gap: 0;
+    border-top: 1px solid rgba(201,169,110,0.15);
+    padding-top: 2rem;
+  }
+
+  .headline-item {
+    display: flex; align-items: baseline; gap: 1.5rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(201,169,110,0.08);
+    transition: border-color 0.3s;
+    cursor: pointer;
+  }
+  .headline-item:hover { border-bottom-color: rgba(201,169,110,0.3); }
+
+  .headline-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    color: #c9558a;
+    opacity: 0.7;
+    min-width: 20px;
+  }
+
+  .headline-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-style: italic;
+    color: var(--mist);
+    line-height: 1.5;
+    flex: 1;
+  }
+
+  .headline-arrow {
+    font-size: 0.8rem;
+    color: var(--gold);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .headline-item:hover .headline-arrow { opacity: 1; }
+
+  /* ISSUE GRID */
+  .mag-issues-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 2.5rem;
+    display: flex; align-items: center; gap: 1.5rem;
+  }
+  .mag-issues-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(201,169,110,0.2);
+  }
+
+  .mag-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+  }
+
+  .mag-card {
+    position: relative;
+    cursor: pointer;
+    group: true;
+  }
+
+  .mag-card-visual {
+    aspect-ratio: 2/3;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 1rem;
+  }
+
+  .mag-card-bg {
+    width: 100%; height: 100%;
+    transition: transform 0.6s ease;
+    position: relative;
+  }
+
+  .mag-card:hover .mag-card-bg { transform: scale(1.04); }
+
+  .mag-cover-sim {
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column;
+    padding: 1rem 0.75rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .sim-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(0.9rem, 2vw, 1.3rem);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1;
+    color: white;
+    text-transform: uppercase;
+    margin-bottom: auto;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+  }
+
+  .sim-issue {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.45rem;
+    letter-spacing: 0.2em;
+    color: rgba(255,255,255,0.7);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .sim-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.75rem;
+    font-style: italic;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.4;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.7);
+  }
+
+  .sim-tag {
+    position: absolute;
+    top: 0.75rem; right: 0.75rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.4rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    background: var(--gold);
+    color: var(--deep);
+    padding: 0.2rem 0.4rem;
+    font-weight: 700;
+  }
+
+  .mag-card-meta {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.7;
+    margin-bottom: 0.4rem;
+  }
+
+  .mag-card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-style: italic;
+    color: var(--mist);
+    line-height: 1.4;
+  }
+
+  /* Simulated cover backgrounds */
+  .bg-magenta { background: linear-gradient(160deg, #6b1a3a 0%, #3d0d24 40%, #1a0810 100%); }
+  .bg-teal    { background: linear-gradient(160deg, #0d4a4a 0%, #082f2f 40%, #030f0f 100%); }
+  .bg-amber   { background: linear-gradient(160deg, #5c3a00 0%, #3a2400 40%, #1a1000 100%); }
+  .bg-indigo  { background: linear-gradient(160deg, #1a1060 0%, #0d0840 40%, #050318 100%); }
+
+  /* Cover photo in card */
+  .mag-card-photo {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
+  }
+
+  /* STRIP */
+  .mag-strip {
+    margin-top: 5rem;
+    padding: 2.5rem 3rem;
+    background: rgba(201,85,138,0.07);
+    border: 1px solid rgba(201,85,138,0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+
+  .strip-text h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin-bottom: 0.4rem;
+  }
+  .strip-text h4 em { font-style: italic; color: #c9558a; }
+
+  .strip-text p {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--mist);
+    opacity: 0.6;
+    text-transform: uppercase;
+  }
+
+  .strip-cta {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: #0a0608;
+    background: #c9558a;
+    border: none;
+    padding: 1rem 2rem;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.3s;
+    white-space: nowrap;
+  }
+  .strip-cta:hover { background: #e06aa0; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 1.5rem 2rem; }
+    .nav-links { display: none; }
+    .hero { padding: 0 2rem 5rem; }
+    .generator, .collection, .philosophy, .magazine { padding: 5rem 2rem; }
+    footer { padding: 3rem 2rem; }
+    .generator-layout, .philosophy-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .collection-grid { grid-template-columns: 1fr; }
+    .collection-card:first-child { grid-row: auto; }
+    .collection-card:first-child .card-visual { min-height: 400px; }
+    .collection-header { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+    .mag-featured { grid-template-columns: 1fr; gap: 3rem; }
+    .mag-grid { grid-template-columns: repeat(2, 1fr); }
+    .magazine-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+    .cover-badge { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">FilAm Fashion</a>
+  <ul class="nav-links">
+    <li><a href="#collections">Collections</a></li>
+    <li><a href="#generator">AI Stylist</a></li>
+    <li><a href="#magazine">Magazine</a></li>
+    <li><a href="#about">Philosophy</a></li>
+    <li><a href="#">Custom</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="weave"></div>
+  <div class="hero-tag">FilAmFashion.com — Est. 2025</div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">FilAmFashion.com — Filipino American Style</p>
+    <h1 class="hero-title">
+      Rooted<br>
+      <em>in two</em><br>
+      worlds.
+    </h1>
+    <p class="hero-subtitle">
+      Where the textures of Pampanga meet the streets of LA. 
+      Handcrafted silhouettes. Woven identity.
+    </p>
+    <div class="hero-cta">
+      <a href="#collections" class="btn-primary">Explore Collection</a>
+      <a href="#generator" class="btn-ghost">AI Stylist →</a>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- AI GENERATOR -->
+<section class="generator" id="generator">
+  <div class="generator-layout">
+    <div class="generator-intro">
+      <p class="section-label">AI-Powered Style</p>
+      <h2>Your style,<br><em>reimagined</em><br>with heritage.</h2>
+      <p>
+        Our AI stylist draws from centuries of Filipino weaving traditions — 
+        piña cloth, hablon, pineapple silk — and merges them with contemporary 
+        American streetwear and tailoring.
+      </p>
+      <p>
+        Describe what you envision. The AI will craft a unique editorial 
+        concept for your custom piece.
+      </p>
+      <div class="style-tags">
+        <button class="style-tag active" onclick="toggleTag(this)">Barong Modern</button>
+        <button class="style-tag" onclick="toggleTag(this)">Streetwear Fusion</button>
+        <button class="style-tag" onclick="toggleTag(this)">Formal Filipiniana</button>
+        <button class="style-tag" onclick="toggleTag(this)">Casual Everyday</button>
+        <button class="style-tag" onclick="toggleTag(this)">Festival Wear</button>
+        <button class="style-tag" onclick="toggleTag(this)">Coastal Luxe</button>
+      </div>
+    </div>
+
+    <div class="ai-box">
+      <div class="ai-controls">
+        <select class="ai-select" id="garmentType">
+          <option value="top">Top / Blouse</option>
+          <option value="dress">Dress / Gown</option>
+          <option value="jacket">Jacket / Outer</option>
+          <option value="barong">Barong Tagalog</option>
+          <option value="set">Co-ord Set</option>
+          <option value="accessories">Accessories</option>
+        </select>
+        <select class="ai-select" id="occasion">
+          <option value="everyday">Everyday Wear</option>
+          <option value="formal">Formal / Gala</option>
+          <option value="wedding">Wedding / Debut</option>
+          <option value="festival">Festival / Fiesta</option>
+          <option value="work">Professional</option>
+        </select>
+        <button class="ai-generate-btn" onclick="generateStyle()" id="genBtn">
+          Generate
+        </button>
+      </div>
+      <span class="ai-label">Editorial Concept</span>
+      <div class="ai-output" id="aiOutput">
+        <em style="opacity:0.5; font-size:1rem;">
+          Select your garment type and occasion, then click Generate to receive 
+          an AI-crafted style concept rooted in Filipino heritage…
+        </em>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COLLECTIONS -->
+<section class="collection" id="collections">
+  <div class="collection-header">
+    <h2>Current<br><em>Collection</em></h2>
+    <a href="#" class="view-all">View All Pieces</a>
+  </div>
+
+  <div class="collection-grid">
+    <!-- Card 1 - Large -->
+    <div class="collection-card">
+      <div class="card-visual">
+        <div class="card-bg pattern-1">
+          <div class="card-symbol">🌺</div>
+        </div>
+        <div class="card-overlay">
+          <p class="card-meta">SS25 — Feature Piece</p>
+          <h3 class="card-title">Hablon<br>Heritage Coat</h3>
+          <p class="card-desc">
+            A structured maxi coat woven from handloomed Iloilo hablon, 
+            re-imagined in an oversized American silhouette. Features 
+            traditional geometric motifs down the lapel.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="collection-card">
+      <div class="card-visual">
+        <div class="card-bg pattern-2">
+          <div class="card-symbol">🌊</div>
+        </div>
+        <div class="card-overlay">
+          <p class="card-meta">SS25 — Tops</p>
+          <h3 class="card-title">Piña Silk<br>Crop Top</h3>
+          <p class="card-desc">
+            Pineapple fibre meets crop silhouette. Lightweight, breathable, 
+            and uniquely Filipino in texture.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="collection-card">
+      <div class="card-visual">
+        <div class="card-bg pattern-3">
+          <div class="card-symbol">✦</div>
+        </div>
+        <div class="card-overlay">
+          <p class="card-meta">SS25 — Occasion</p>
+          <h3 class="card-title">Modern<br>Barong</h3>
+          <p class="card-desc">
+            The barong, stripped to its raw embroidered beauty and 
+            re-cut in a contemporary boxy fit.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="collection-card">
+      <div class="card-visual">
+        <div class="card-bg" style="background: radial-gradient(ellipse at 30% 70%, rgba(139,58,42,0.4), #1a120a);">
+          <div class="card-symbol">🌿</div>
+        </div>
+        <div class="card-overlay">
+          <p class="card-meta">SS25 — Sets</p>
+          <h3 class="card-title">Banig<br>Co-ord</h3>
+          <p class="card-desc">
+            Inspired by the traditional woven banig mat, this matching 
+            set uses graphic stripe in earthy harvest tones.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 5 -->
+    <div class="collection-card">
+      <div class="card-visual">
+        <div class="card-bg" style="background: repeating-conic-gradient(rgba(201,169,110,0.08) 0deg 90deg, #1a120a 90deg 180deg) 0 0/30px 30px, #1a120a;">
+          <div class="card-symbol">🦅</div>
+        </div>
+        <div class="card-overlay">
+          <p class="card-meta">SS25 — Outerwear</p>
+          <h3 class="card-title">Diwata<br>Kimono</h3>
+          <p class="card-desc">
+            A fusion silhouette drawing from both Japanese-influenced 
+            Filipino colonial dress and American streetwear draping.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PHILOSOPHY -->
+<section class="philosophy" id="about">
+  <div class="philosophy-grid">
+    <div class="philosophy-text">
+      <p class="section-label">Our Philosophy</p>
+      <h2>Made from<br>memory,<br><em>worn today.</em></h2>
+      <p>
+        LIKHA — the Tagalog word for <em>to create</em> — was born from 
+        the tension of existing between two cultures and finding beauty 
+        in that in-between space. FilAm Fashion is where that story lives.
+      </p>
+      <p>
+        Every piece begins with Filipino textile heritage and is shaped 
+        by the American experience. Custom-made. Never mass-produced.
+      </p>
+    </div>
+    <div class="pillars">
+      <div class="pillar">
+        <div class="pillar-num">01</div>
+        <div class="pillar-content">
+          <h3>Heritage Textiles</h3>
+          <p>We source authentic piña, abaca, and hablon weaves directly 
+          from Filipino artisan cooperatives.</p>
+        </div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">02</div>
+        <div class="pillar-content">
+          <h3>Custom Made</h3>
+          <p>Every garment is made to order. Your measurements, your 
+          story, your piece — nothing sits in a warehouse.</p>
+        </div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">03</div>
+        <div class="pillar-content">
+          <h3>AI-Assisted Design</h3>
+          <p>We use AI to generate editorial concepts, colorways, and 
+          style narratives — then human hands bring each one to life.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MAGAZINE -->
+<section class="magazine" id="magazine">
+
+  <div class="magazine-header">
+    <div>
+      <p class="section-label" style="color:#c9558a;">The Magazine</p>
+      <h2>FilAm Fashion<br><em>Magazine</em></h2>
+    </div>
+    <div class="mag-issue-tag">
+      Spring / Summer 2024<br>
+      Style Icons Issue<br>
+      The Filipino American Style Magazine
+    </div>
+  </div>
+
+  <!-- FEATURED COVER SPREAD -->
+  <div class="mag-featured">
+    <div class="cover-wrap">
+      <div class="cover-img-container">
+        <img src="filam.png" alt="FilAm Fashion Magazine Cover — Spring/Summer 2024" class="cover-photo">
+        <div class="cover-badge">Spring / Summer 2024</div>
+        <div class="cover-caption">Cover — Spring/Summer 2024 Style Icons Issue</div>
+      </div>
+    </div>
+
+    <div class="cover-editorial">
+      <span class="mag-kicker">Featured Issue</span>
+
+      <h3>The Next Generation<br>of <em>Filipino American</em><br>Style</h3>
+
+      <p>
+        From the barong to the baro't saya, the garments of the Philippines have always told a story. 
+        In this landmark issue, we celebrate the children who will carry that story forward — 
+        wearing heritage not as costume, but as identity. Modern. Proud. Rooted in two worlds.
+      </p>
+
+      <div class="cover-headlines">
+        <div class="headline-item">
+          <span class="headline-num">01</span>
+          <span class="headline-text">Modern Traditional — The best Barong & Baro't Saya looks of the season</span>
+          <span class="headline-arrow">→</span>
+        </div>
+        <div class="headline-item">
+          <span class="headline-num">02</span>
+          <span class="headline-text">New Trends from Manila to Manhattan — how Filipino fashion crossed the Pacific</span>
+          <span class="headline-arrow">→</span>
+        </div>
+        <div class="headline-item">
+          <span class="headline-num">03</span>
+          <span class="headline-text">Style Icons — the FilAm community's most inspiring fashion voices</span>
+          <span class="headline-arrow">→</span>
+        </div>
+        <div class="headline-item">
+          <span class="headline-num">04</span>
+          <span class="headline-text">Fabric of Memory — sourcing piña and hablon in the modern age</span>
+          <span class="headline-arrow">→</span>
+        </div>
+        <div class="headline-item">
+          <span class="headline-num">05</span>
+          <span class="headline-text">Custom & Made to Order — why bespoke is the future of FilAm fashion</span>
+          <span class="headline-arrow">→</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAST / UPCOMING ISSUES GRID -->
+  <p class="mag-issues-label">All Issues</p>
+
+  <div class="mag-grid">
+
+    <!-- Issue 1 — real cover -->
+    <div class="mag-card">
+      <div class="mag-card-visual">
+        <div class="mag-card-bg">
+          <img src="filam.png" alt="SS24 Cover" class="mag-card-photo">
+        </div>
+      </div>
+      <p class="mag-card-meta">SS24 — Issue 01</p>
+      <p class="mag-card-title">Style Icons — The Next Generation</p>
+    </div>
+
+    <!-- Issue 2 — simulated -->
+    <div class="mag-card">
+      <div class="mag-card-visual">
+        <div class="mag-card-bg bg-teal">
+          <div class="mag-cover-sim">
+            <span class="sim-title">FilAm<br>Fashion</span>
+            <span class="sim-tag">FW24</span>
+            <span class="sim-issue">Fall / Winter 2024</span>
+            <span class="sim-headline">Woven in the Dark — hablon for the evening</span>
+          </div>
+        </div>
+      </div>
+      <p class="mag-card-meta">FW24 — Issue 02</p>
+      <p class="mag-card-title">Woven in the Dark — Evening Heritage</p>
+    </div>
+
+    <!-- Issue 3 — simulated -->
+    <div class="mag-card">
+      <div class="mag-card-visual">
+        <div class="mag-card-bg bg-amber">
+          <div class="mag-cover-sim">
+            <span class="sim-title">FilAm<br>Fashion</span>
+            <span class="sim-tag">SS25</span>
+            <span class="sim-issue">Spring / Summer 2025</span>
+            <span class="sim-headline">Piña Dreams — pineapple silk for a new generation</span>
+          </div>
+        </div>
+      </div>
+      <p class="mag-card-meta">SS25 — Issue 03</p>
+      <p class="mag-card-title">Piña Dreams — Silk for a New Era</p>
+    </div>
+
+    <!-- Issue 4 — Coming Soon -->
+    <div class="mag-card">
+      <div class="mag-card-visual">
+        <div class="mag-card-bg bg-indigo">
+          <div class="mag-cover-sim">
+            <span class="sim-title">FilAm<br>Fashion</span>
+            <span class="sim-tag" style="background:#c9558a; color:white;">FW25</span>
+            <span class="sim-issue">Fall / Winter 2025</span>
+            <span class="sim-headline" style="color:#c9558a; font-style:normal; font-family:'Space Mono',monospace; font-size:0.6rem; letter-spacing:0.15em;">Coming Soon</span>
+          </div>
+        </div>
+      </div>
+      <p class="mag-card-meta">FW25 — Issue 04</p>
+      <p class="mag-card-title" style="color:#c9558a; font-style:normal;">Coming Soon — Fall/Winter 2025</p>
+    </div>
+
+  </div>
+
+  <!-- SUBSCRIBE STRIP -->
+  <div class="mag-strip">
+    <div class="strip-text">
+      <h4>Never miss an <em>issue.</em></h4>
+      <p>New editorial drops, lookbooks &amp; style stories — straight to your inbox.</p>
+    </div>
+    <a href="#" class="strip-cta">Subscribe to the Magazine</a>
+  </div>
+
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    FilAm Fashion
+    <span>filamfashion.com</span>
+  </div>
+  <p class="footer-copy">
+    © 2025 FilAm Fashion. All rights reserved.<br>
+    Custom clothing. Filipino heritage. American soul.
+  </p>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+    setTimeout(() => {
+      ring.style.left = e.clientX + 'px';
+      ring.style.top = e.clientY + 'px';
+    }, 80);
+  });
+
+  // Style tags toggle
+  function toggleTag(el) {
+    document.querySelectorAll('.style-tag').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  // AI generation
+  async function generateStyle() {
+    const garment = document.getElementById('garmentType').value;
+    const occasion = document.getElementById('occasion').value;
+    const activeTag = document.querySelector('.style-tag.active')?.textContent || 'Barong Modern';
+    const btn = document.getElementById('genBtn');
+    const output = document.getElementById('aiOutput');
+
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span>Creating...';
+    output.classList.add('loading');
+    output.innerHTML = '';
+
+    const garmentLabels = {
+      top: 'top or blouse', dress: 'dress or gown', jacket: 'jacket or outer layer',
+      barong: 'Barong Tagalog', set: 'co-ordinated set', accessories: 'accessories'
+    };
+    const occasionLabels = {
+      everyday: 'everyday casual wear', formal: 'a formal gala or event',
+      wedding: 'a Filipino wedding or debut', festival: 'a fiesta or cultural festival',
+      work: 'a professional setting'
+    };
+
+    const prompt = `You are an editorial writer for a Filipino American fashion brand called FilAm Fashion (filamfashion.com). Write a rich, evocative editorial concept (4-6 sentences) for a custom ${garmentLabels[garment]} in the style of "${activeTag}", intended for ${occasionLabels[occasion]}.
+
+Draw specifically on Filipino textile heritage (piña, hablon, abaca, jusi, pineapple silk, banig, or traditional embroidery) combined with contemporary American fashion sensibilities. Include: a poetic concept/inspiration, specific fabric or weave suggestion, silhouette description, and a color palette with evocative names. Write in a sophisticated, editorial tone — like Vogue meets the spirit of the Philippines.`;
+
+    try {
+      const response = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          model: "claude-sonnet-4-20250514",
+          max_tokens: 1000,
+          messages: [{ role: "user", content: prompt }]
+        })
+      });
+
+      const data = await response.json();
+      const text = data.content?.[0]?.text || "Unable to generate concept. Please try again.";
+
+      output.classList.remove('loading');
+      output.innerHTML = '';
+      
+      // Typewriter effect
+      let i = 0;
+      const interval = setInterval(() => {
+        output.textContent = text.substring(0, i);
+        i += 3;
+        if (i >= text.length) {
+          output.textContent = text;
+          clearInterval(interval);
+        }
+      }, 20);
+
+    } catch (err) {
+      output.classList.remove('loading');
+      output.innerHTML = '<em style="color: var(--rust);">Connection error. Please check your API access and try again.</em>';
+    }
+
+    btn.disabled = false;
+    btn.textContent = 'Generate';
+  }
+
+  // Intersection Observer for subtle entrance animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.pillar, .collection-card').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
