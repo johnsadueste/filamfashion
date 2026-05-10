@@ -465,6 +465,7 @@
   }
 
   .collection-card:hover .card-bg { transform: scale(1.05); }
+  .collection-card:hover .card-bg img { transform: scale(1.05); }
 
   /* Textile pattern cards */
   .pattern-1 {
@@ -1192,8 +1193,10 @@
     <!-- Card 1 - Large -->
     <div class="collection-card">
       <div class="card-visual">
-        <div class="card-bg pattern-1">
-          <div class="card-symbol">🌺</div>
+        <div class="card-bg" style="position:relative; overflow:hidden;">
+          <img src="images/collections/hablon-heritage-coat.jpg" 
+               alt="Hablon Heritage Coat — FilAm Fashion SS25" 
+               style="width:100%; height:100%; object-fit:cover; object-position:top center; display:block; transition:transform 0.7s ease;">
         </div>
         <div class="card-overlay">
           <p class="card-meta">SS25 — Feature Piece</p>
@@ -1203,6 +1206,7 @@
             re-imagined in an oversized American silhouette. Features 
             traditional geometric motifs down the lapel.
           </p>
+          <p style="font-family:'Space Mono',monospace; font-size:0.45rem; letter-spacing:0.15em; color:rgba(212,197,176,0.4); margin-top:0.75rem; text-transform:uppercase;">© 2025 FilAm Fashion — AI Generated Image</p>
         </div>
       </div>
     </div>
